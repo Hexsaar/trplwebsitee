@@ -1,6 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import AdminPanel from './admin/AdminPanel';
 import LoginPage from './admin/LoginPage';
+
+// ===== SCROLL REVEAL HOOK =====
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    const elements = document.querySelectorAll('.reveal');
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  });
+}
+
+// ===== SCROLL PROGRESS BAR =====
+function ScrollProgressBar() {
+  const barRef = useRef(null);
+  useEffect(() => {
+    const bar = barRef.current;
+    const onScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      if (bar) bar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return <div id="scroll-progress" ref={barRef} style={{ width: '0%' }} />;
+}
 
 const HeroSection = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -190,7 +226,7 @@ const AboutSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* Kolom Kiri: Imej */}
-          <div className="relative w-full">
+          <div className="relative w-full reveal reveal-left">
             <img
               src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
               alt="Tentang Mahasiswa"
@@ -199,7 +235,7 @@ const AboutSection = () => {
           </div>
 
           {/* Kolom Kanan: Teks & Statistik */}
-          <div className="flex flex-col relative z-20">
+          <div className="flex flex-col relative z-20 reveal reveal-right">
             <h4 className="text-[17px] font-semibold text-black mb-2 tracking-wide">About</h4>
 
             <h2 className="text-5xl md:text-6xl font-serif text-black leading-[1.1] mb-5 tracking-tight">
@@ -212,7 +248,7 @@ const AboutSection = () => {
 
             {/* Statistik Bawah */}
             <div className="grid grid-cols-3 gap-6">
-              <div className="flex flex-col">
+              <div className="flex flex-col reveal reveal-delay-1">
                 <div className="text-4xl md:text-[2.75rem] font-normal text-black mb-2 font-serif tracking-tight">500+</div>
                 <div className="flex items-center gap-1.5 text-[10px] font-medium text-gray-600 tracking-wide">
                   <span className="w-1.5 h-1.5 rounded-full bg-brandGreen"></span>
@@ -220,7 +256,7 @@ const AboutSection = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col reveal reveal-delay-2">
                 <div className="text-4xl md:text-[2.75rem] font-normal text-black mb-2 font-serif tracking-tight">6+</div>
                 <div className="flex items-center gap-1.5 text-[10px] font-medium text-gray-600 tracking-wide">
                   <span className="w-1.5 h-1.5 rounded-full bg-brandGreen"></span>
@@ -228,7 +264,7 @@ const AboutSection = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col reveal reveal-delay-3">
                 <div className="text-4xl md:text-[2.75rem] font-normal text-black mb-2 font-serif tracking-tight">10+</div>
                 <div className="flex items-center gap-1.5 text-[10px] font-medium text-gray-600 tracking-wide">
                   <span className="w-1.5 h-1.5 rounded-full bg-brandGreen"></span>
@@ -258,7 +294,7 @@ const LecturerSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
           {/* (-) Bagian Atas / Kiri: Judul Utama */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 reveal reveal-left">
             <h2 className="text-5xl sm:text-6xl lg:text-[4.5rem] font-sans font-semibold tracking-tight leading-[1.08] text-white">
               Lecturer & Expert<br />
               Software Engineer<br />
@@ -266,8 +302,8 @@ const LecturerSection = () => {
             </h2>
           </div>
 
-          {/* (_) Bagian Bawah / Kanan: Diturunkan jauh lebih ke bawah dengan lg:pt-52 */}
-          <div className="lg:col-span-5 lg:pt-52 flex flex-col justify-end">
+          {/* (_) Bagian Bawah / Kanan */}
+          <div className="lg:col-span-5 lg:pt-52 flex flex-col justify-end reveal reveal-right">
 
             {/* Teks Deskripsi: Ukuran diperbesar (text-base sm:text-lg) & lebih terang (text-gray-200) */}
             <p className="text-base sm:text-lg text-gray-200 leading-relaxed mb-10 font-normal">
@@ -348,7 +384,7 @@ const LecturerSliderSection = () => {
     <section className="bg-white text-black font-sans py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-8">
-          <div>
+          <div className="reveal reveal-left">
             <h3 className="text-cyan-600 font-bold uppercase tracking-widest text-xs mb-2">Lecturer & Faculty</h3>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
               Lecturer & Expert Software<br />Engineer Technology
@@ -382,7 +418,7 @@ const LecturerSliderSection = () => {
           {visibleItems.map((lecturer, index) => (
             <div
               key={lecturer.id || index}
-              className="bg-[#1f232b] text-white rounded-[1.75rem] p-5 shadow-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 border border-slate-800"
+              className={`bg-[#1f232b] text-white rounded-[1.75rem] p-5 shadow-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 border border-slate-800 reveal reveal-delay-${Math.min(index + 1, 5)}`}
             >
               <div className="w-full h-64 rounded-[1.25rem] overflow-hidden mb-5 relative group">
                 <img
@@ -861,6 +897,8 @@ const FooterSection = () => {
 
 export default function App() {
   const [route, setRoute] = useState(window.location.hash || '#/');
+  useScrollReveal();
+
   useEffect(() => {
     function onHash() { setRoute(window.location.hash || '#/'); }
     window.addEventListener('hashchange', onHash);
@@ -874,7 +912,8 @@ export default function App() {
   }
 
   return (
-    <>
+    <div className="page-enter">
+      <ScrollProgressBar />
       <HeroSection />
       <AboutSection />
       <LecturerSection />
@@ -883,6 +922,6 @@ export default function App() {
       <WorkshopSection />
       <NewsCardSection />
       <FooterSection />
-    </>
+    </div>
   );
 }

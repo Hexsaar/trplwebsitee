@@ -3,62 +3,89 @@ import AdminPanel from './admin/AdminPanel';
 import LoginPage from './admin/LoginPage';
 
 const HeroSection = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   // navigation to login page
   return (
-    <div className="bg-darkBg text-white font-sans min-h-screen overflow-x-hidden relative selection:bg-cyan-500 selection:text-black">
+    <div id="home" className="bg-darkBg text-white font-sans min-h-screen overflow-x-hidden relative selection:bg-cyan-500 selection:text-black">
       {/* Ambient Background Glow */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-amber-700/10 rounded-full blur-[140px] -z-10 pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-amber-700/10 rounded-full blur-[100px] sm:blur-[140px] -z-10 pointer-events-none"></div>
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-6 py-6">
 
         {/* Navbar */}
-        <header className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex font-black text-3xl tracking-tighter leading-none italic">
+        <header className="flex items-center justify-between py-2 sm:py-4 relative z-50">
+          <div className="flex items-center gap-1.5 sm:gap-3">
+            <div className="flex font-black text-2xl sm:text-3xl tracking-tighter leading-none italic">
               <span className="text-cyan-400">T</span>
               <span className="text-white">/</span>
               <span className="text-cyan-400">L</span>
             </div>
-            <div className="text-[9px] leading-tight font-bold tracking-wider text-gray-300 uppercase">
+            <div className="hidden min-[360px]:block text-[7px] sm:text-[9px] leading-tight font-bold tracking-wider text-gray-300 uppercase shrink-0">
               Teknologi<br />Rekayasa Perangkat<br />Lunak
             </div>
           </div>
 
           <nav className="hidden md:flex items-center space-x-10 text-sm font-medium text-gray-300">
-            <a href="#" className="text-white hover:text-cyan-400 transition">Home</a>
-            <a href="#" className="hover:text-white transition">About</a>
-            <a href="#" className="hover:text-white transition">Lecturer</a>
-            <a href="#" className="hover:text-white transition">Workshop</a>
-            <a href="#" className="hover:text-white transition">News</a>
+            <a href="#home" className="text-white hover:text-cyan-400 transition">Home</a>
+            <a href="#about" className="hover:text-white transition">About</a>
+            <a href="#lecturer" className="hover:text-white transition">Lecturer</a>
+            <a href="#workshop" className="hover:text-white transition">Workshop</a>
+            <a href="#news" className="hover:text-white transition">News</a>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button onClick={() => window.location.hash = '#/admin/login'} className="bg-yellow-400 hover:opacity-95 text-slate-900 text-xs font-semibold px-3 py-2 rounded-full transition">Admin</button>
-            <button className="bg-[#1e2028] hover:bg-gray-800 text-gray-200 text-xs font-semibold px-6 py-2.5 rounded-full border border-gray-700/50 transition">
+            <button className="hidden sm:block bg-[#1e2028] hover:bg-gray-800 text-gray-200 text-xs font-semibold px-6 py-2.5 rounded-full border border-gray-700/50 transition">
               Join Now
+            </button>
+            <button
+              className="md:hidden text-gray-300 hover:text-white p-2 z-50"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
             </button>
           </div>
         </header>
 
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-[60px] left-0 w-full bg-[#12141a]/95 backdrop-blur-md z-40 border-b border-gray-800/50 py-6 px-6 flex flex-col gap-5 shadow-2xl">
+            <a href="#home" onClick={() => setIsMenuOpen(false)} className="text-white font-medium text-lg">Home</a>
+            <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">About</a>
+            <a href="#lecturer" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">Lecturer</a>
+            <a href="#workshop" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">Workshop</a>
+            <a href="#news" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">News</a>
+            <button className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-sm font-bold px-6 py-3 rounded-full transition w-full mt-2">
+              Join Now
+            </button>
+          </div>
+        )}
+
         {/* Hero Content Section */}
-        <main className="mt-8 lg:mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <main className="mt-4 sm:mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
           {/* Left Column */}
           <div className="lg:col-span-6 flex flex-col justify-between">
-            <h1 className="text-6xl sm:text-7xl lg:text-[5.25rem] font-serif tracking-tight leading-[1.05] text-white mb-6">
+            <h1 className="text-5xl sm:text-7xl lg:text-[5.25rem] font-serif tracking-tight leading-[1.05] text-white mb-4 sm:mb-6">
               Teknologi<br />
               Rekayasa<br />
               Perangkat<br />
               Lunak
             </h1>
 
-            {/* Cards Container */}
-            <div className="relative w-full h-[360px] mt-8 overflow-hidden">
+            {/* Cards Container - mobile: stacked, desktop: overlapping */}
+            <div className="w-full mt-4 sm:mt-8 flex flex-col gap-4 sm:block sm:relative sm:h-[360px]">
 
               {/* Pink Card */}
-              <div className="absolute top-0 left-0 w-[263.34px] h-[385px] bg-cardPink text-slate-900 p-6 rounded-[2rem] shadow-[0_30px_80px_rgba(242,160,149,0.18)] z-10 transition-all duration-500 hover:-translate-y-1 hover:scale-105">
-                <div className="flex items-center gap-3 mb-3">
+              <div className="relative sm:absolute sm:top-0 sm:left-0 w-full sm:w-[263.34px] p-5 sm:p-6 bg-cardPink text-slate-900 rounded-[1.5rem] sm:rounded-[2rem] shadow-lg z-10 transition-all duration-500 hover:-translate-y-1 hover:scale-105">
+                <div className="flex items-center gap-3 mb-2 sm:mb-3">
                   <div className="w-9 h-9 bg-white/95 rounded-full flex items-center justify-center shadow-sm shrink-0">
                     <svg viewBox="0 0 24 24" className="w-4 h-4 text-slate-900" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       <path d="M13 2 3 13h6v9l10-11h-6z" />
@@ -72,8 +99,8 @@ const HeroSection = () => {
               </div>
 
               {/* Green/Cyan Card */}
-              <div className="absolute top-32 left-[150px] sm:left-[180px] w-[263.34px] h-[335px] bg-cardCyan text-slate-900 p-6 rounded-[2rem] shadow-[0_30px_80px_rgba(77,228,190,0.18)] z-20 transition-all duration-500 hover:-translate-y-1 hover:scale-105">
-                <div className="flex items-center gap-3 mb-3">
+              <div className="relative sm:absolute sm:top-32 sm:left-[180px] w-full sm:w-[263.34px] p-5 sm:p-6 bg-cardCyan text-slate-900 rounded-[1.5rem] sm:rounded-[2rem] shadow-lg z-20 transition-all duration-500 hover:-translate-y-1 hover:scale-105">
+                <div className="flex items-center gap-3 mb-2 sm:mb-3">
                   <div className="w-9 h-9 bg-white/95 rounded-full flex items-center justify-center shadow-sm shrink-0">
                     <svg viewBox="0 0 24 24" className="w-4 h-4 text-slate-900" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       <path d="M4 7.5 12 3l8 4.5v9L12 21 4 16.5v-9zm1.2 1.1L12 5.3l6.8 3.3v1.8L12 8.7 5.2 10.3v-1.7zm0 4.4 6.8 3.3 6.8-3.3v4.2L12 19.7 5.2 13.4v-1.4z" />
@@ -90,7 +117,7 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column */}
-          <div className="lg:col-span-6 flex flex-col pt-2 lg:pl-6">
+          <div className="lg:col-span-6 flex flex-col pt-4 sm:pt-2 lg:pl-6 relative z-10">
 
             <div className="mb-8">
               <p className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-md mb-5 font-normal">
@@ -118,7 +145,7 @@ const HeroSection = () => {
                 </button>
               </div>
 
-              <div className="p-5 font-mono text-xs leading-relaxed text-gray-200 overflow-x-auto">
+              <div className="p-4 sm:p-5 font-mono text-[10px] sm:text-xs leading-relaxed text-gray-200 overflow-x-auto whitespace-nowrap">
                 <div className="mb-4">
                   <span className="text-purple-400">import</span> {"{ "} <span className="text-yellow-300">getStrapiData</span> {" }"} <span className="text-purple-400">from</span> <span className="text-emerald-300">'@/lib/api'</span>;
                 </div>
@@ -137,7 +164,7 @@ const HeroSection = () => {
             </div>
 
             {/* Stats Badge */}
-            <div className="flex flex-col items-end w-full max-w-lg pr-4">
+            <div className="flex flex-col items-end w-full max-w-lg pr-4 mb-16 sm:mb-0">
               <span className="text-gray-400 text-[11px] font-medium tracking-wide">Strapi v4 + PostgreSQL</span>
               <div className="text-5xl sm:text-6xl font-extrabold tracking-tight text-white my-1 animate-pulse">
                 500<span className="text-gray-400 font-light">+</span>
@@ -158,16 +185,16 @@ const HeroSection = () => {
 
 const AboutSection = () => {
   return (
-    <section className="relative z-30 -mt-32 w-full min-h-screen bg-white py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section id="about" className="relative z-30 -mt-16 sm:-mt-32 w-full min-h-screen bg-white py-16 sm:py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* Kolom Kiri: Imej */}
           <div className="relative w-full">
             <img
               src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
               alt="Tentang Mahasiswa"
-              className="w-full h-[380px] object-cover rounded-tl-[2.5rem] rounded-bl-[2.5rem] rounded-br-[2.5rem] rounded-tr-md shadow-lg relative z-10"
+              className="w-full h-[260px] sm:h-[380px] object-cover rounded-tl-[2.5rem] rounded-bl-[2.5rem] rounded-br-[2.5rem] rounded-tr-md shadow-lg relative z-10"
             />
           </div>
 
@@ -226,7 +253,7 @@ const AboutSection = () => {
 
 const LecturerSection = () => {
   return (
-    <section className="relative w-full min-h-screen bg-darkBg text-white py-24 overflow-hidden flex items-center">
+    <section id="lecturer" className="relative w-full min-h-screen bg-darkBg text-white py-16 sm:py-24 overflow-hidden flex items-center">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
@@ -504,7 +531,7 @@ const WorkshopSection = () => {
   const displayItems = items.length >= 6 ? items.slice(0, 6) : items;
 
   return (
-    <section className="relative w-full bg-[#0e1117] text-white py-24 overflow-hidden">
+    <section id="workshop" className="relative w-full bg-[#0e1117] text-white py-24 overflow-hidden">
       {/* Background Accent Decorative Circle */}
       <div className="absolute -top-24 -left-24 rotate-[15deg] pointer-events-none z-0">
         <div className="relative w-80 h-96 bg-brandOrange/80 blur-2xl rounded-full opacity-30"></div>
@@ -619,7 +646,7 @@ const NewsCardSection = () => {
   const visibleNews = items.length <= 2 ? items : items.slice(newsIndex, newsIndex + 2);
 
   return (
-    <section className="bg-[#0b0e14] text-white py-24 relative overflow-hidden font-sans border-t border-gray-800">
+    <section id="news" className="bg-[#0b0e14] text-white py-24 relative overflow-hidden font-sans border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative">
 
         {/* Section Header with Left/Right Chevrons */}
@@ -752,7 +779,7 @@ const FooterSection = () => {
           {/* Column 1: Learn More */}
           <div>
             <h4 className="font-bold text-sm text-white mb-4">Learn More</h4>
-            <ul className="space-y-2.5 text-xs text-gray-400 font-medium">
+            <ul className="space-y-4 sm:space-y-2.5 text-xs text-gray-400 font-medium">
               <li><a href="#" className="hover:text-white transition">About Lift</a></li>
               <li><a href="#" className="hover:text-white transition">Press Release</a></li>
               <li><a href="#" className="hover:text-white transition">Environment</a></li>
@@ -765,7 +792,7 @@ const FooterSection = () => {
           {/* Column 2: Tickets & Booking */}
           <div>
             <h4 className="font-bold text-sm text-white mb-4">Tickets & Booking</h4>
-            <ul className="space-y-2.5 text-xs text-gray-400 font-medium">
+            <ul className="space-y-4 sm:space-y-2.5 text-xs text-gray-400 font-medium">
               <li><a href="#" className="hover:text-white transition">Lift Tickets</a></li>
               <li><a href="#" className="hover:text-white transition">Season Passes</a></li>
               <li><a href="#" className="hover:text-white transition">Vacation Packages</a></li>
@@ -775,7 +802,7 @@ const FooterSection = () => {
           {/* Column 3: Contact Us */}
           <div>
             <h4 className="font-bold text-sm text-white mb-4">Contact Us</h4>
-            <ul className="space-y-2.5 text-xs text-gray-400 font-medium">
+            <ul className="space-y-4 sm:space-y-2.5 text-xs text-gray-400 font-medium">
               <li>Hotel Reservation: <span className="text-white">123-456-7890</span></li>
               <li>Ticket Office: <span className="text-white">123-456-789</span></li>
             </ul>

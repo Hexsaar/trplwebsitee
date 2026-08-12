@@ -282,9 +282,6 @@ const AdminPanel = ({ onClose, fullPage = false }) => {
             <p className="text-xs text-slate-500">Kelola Dosen, Staf, Workshop, dan News secara Real-Time</p>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => window.location.hash = '#/'} className="px-3 py-1.5 bg-slate-200 text-slate-800 text-xs font-semibold rounded-lg hover:bg-slate-300 transition">
-              ← Back to Site
-            </button>
             {token && (
               <button onClick={doLogout} className="px-3 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-lg hover:bg-red-700 transition">
                 Logout

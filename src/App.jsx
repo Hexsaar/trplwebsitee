@@ -41,6 +41,29 @@ function ScrollProgressBar() {
 
 const HeroSection = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Hidden admin access dengan keyboard shortcut
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      // Kombinasi Ctrl + Shift + A untuk akses admin
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        window.location.hash = '#/trpl-system-management';
+      }
+    };
+    
+    // Admin console command (hanya admin yang tahu)
+    window.adminAccess = () => {
+      window.location.hash = '#/dashboard-admin-secret';
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      delete window.adminAccess;
+    };
+  }, []);
+  
   // navigation to login page
   return (
     <div id="home" className="bg-darkBg text-white font-sans min-h-screen overflow-x-hidden relative selection:bg-cyan-500 selection:text-black">
@@ -48,7 +71,7 @@ const HeroSection = () => {
       <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-amber-700/10 rounded-full blur-[100px] sm:blur-[140px] -z-10 pointer-events-none"></div>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="max-w-7xl mx-auto px-6 py-6 pb-20 sm:pb-12">
 
         {/* Navbar */}
         <header className="flex items-center justify-center py-3 sm:py-4 relative z-50">
@@ -63,7 +86,6 @@ const HeroSection = () => {
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3 absolute right-0">
-            <button onClick={() => window.location.hash = '#/admin/login'} className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-xs font-semibold px-4 py-2 rounded-full transition outline-none focus:outline-none shadow-[0_0_12px_rgba(77,228,190,0.4)]">Admin</button>
             <button className="hidden sm:block bg-white/5 hover:bg-white/10 text-gray-200 text-xs font-semibold px-5 py-2 rounded-full border border-white/10 backdrop-blur-sm transition outline-none focus:outline-none">
               Join Now
             </button>
@@ -107,7 +129,13 @@ const HeroSection = () => {
               <img
                 src={logoTrpl}
                 alt="Logo TRPL"
-                className="w-56 sm:w-72 lg:w-80 h-auto object-contain animate-logo-hero drop-shadow-[0_0_40px_rgba(77,228,190,0.35)]"
+                className="w-56 sm:w-72 lg:w-80 h-auto object-contain animate-logo-hero drop-shadow-[0_0_40px_rgba(77,228,190,0.35)] cursor-pointer"
+                onClick={(e) => {
+                  // Triple click + Ctrl untuk akses admin
+                  if (e.detail === 3 && e.ctrlKey) {
+                    window.location.hash = '#/trpl-system-management';
+                  }
+                }}
               />
             </div>
 
@@ -195,7 +223,7 @@ const HeroSection = () => {
             </div>
 
             {/* Stats Badge */}
-            <div className="flex flex-col items-end w-full max-w-lg pr-4 mb-16 sm:mb-0">
+            <div className="flex flex-col items-end w-full max-w-lg pr-4 mb-20 sm:mb-8">
               <span className="text-gray-400 text-[11px] font-medium tracking-wide">Strapi v4 + PostgreSQL</span>
               <div className="text-5xl sm:text-6xl font-extrabold tracking-tight text-white my-1 animate-pulse">
                 500<span className="text-gray-400 font-light">+</span>
@@ -216,7 +244,7 @@ const HeroSection = () => {
 
 const AboutSection = () => {
   return (
-    <section id="about" className="relative z-30 -mt-16 sm:-mt-32 w-full min-h-screen bg-white py-16 sm:py-24 overflow-hidden">
+    <section id="about" className="relative z-30 -mt-8 sm:-mt-16 w-full min-h-screen bg-white py-16 sm:py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
@@ -900,9 +928,15 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  // Route untuk admin dengan path tersembunyi
   if (route.startsWith('#/admin')) {
     if (route === '#/admin/login') return <LoginPage />;
     if (route === '#/admin/panel') return <AdminPanel fullPage={true} />;
+    return <LoginPage />;
+  }
+  
+  // Route rahasia untuk admin - hanya admin yang tahu
+  if (route === '#/trpl-system-management' || route === '#/dashboard-admin-secret') {
     return <LoginPage />;
   }
 

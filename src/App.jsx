@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import AdminPanel from './admin/AdminPanel';
 import LoginPage from './admin/LoginPage';
+import logoTrpl from './assets/logotrpl.png';
 
 // ===== SCROLL REVEAL HOOK =====
 function useScrollReveal() {
@@ -50,33 +51,24 @@ const HeroSection = () => {
       <div className="max-w-7xl mx-auto px-6 py-6">
 
         {/* Navbar */}
-        <header className="flex items-center justify-between py-2 sm:py-4 relative z-50">
-          <div className="flex items-center gap-1.5 sm:gap-3">
-            <div className="flex font-black text-2xl sm:text-3xl tracking-tighter leading-none italic">
-              <span className="text-cyan-400">T</span>
-              <span className="text-white">/</span>
-              <span className="text-cyan-400">L</span>
-            </div>
-            <div className="hidden min-[360px]:block text-[7px] sm:text-[9px] leading-tight font-bold tracking-wider text-gray-300 uppercase shrink-0">
-              Teknologi<br />Rekayasa Perangkat<br />Lunak
-            </div>
-          </div>
+        <header className="flex items-center justify-center py-3 sm:py-4 relative z-50">
 
-          <nav className="hidden md:flex items-center space-x-10 text-sm font-medium text-gray-300">
-            <a href="#home" className="text-white hover:text-cyan-400 transition">Home</a>
-            <a href="#about" className="hover:text-white transition">About</a>
-            <a href="#lecturer" className="hover:text-white transition">Lecturer</a>
-            <a href="#workshop" className="hover:text-white transition">Workshop</a>
-            <a href="#news" className="hover:text-white transition">News</a>
+          {/* Nav pill — glassmorphism */}
+          <nav className="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-2 py-1.5 shadow-lg">
+            <a href="#home" className="text-white text-sm font-medium px-4 py-1.5 rounded-full bg-white/10 hover:bg-cyan-500/20 hover:text-cyan-400 transition">Home</a>
+            <a href="#about" className="text-gray-400 text-sm font-medium px-4 py-1.5 rounded-full hover:bg-white/10 hover:text-white transition">About</a>
+            <a href="#lecturer" className="text-gray-400 text-sm font-medium px-4 py-1.5 rounded-full hover:bg-white/10 hover:text-white transition">Lecturer</a>
+            <a href="#workshop" className="text-gray-400 text-sm font-medium px-4 py-1.5 rounded-full hover:bg-white/10 hover:text-white transition">Workshop</a>
+            <a href="#news" className="text-gray-400 text-sm font-medium px-4 py-1.5 rounded-full hover:bg-white/10 hover:text-white transition">News</a>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <button onClick={() => window.location.hash = '#/admin/login'} className="bg-yellow-400 hover:opacity-95 text-slate-900 text-xs font-semibold px-3 py-2 rounded-full transition">Admin</button>
-            <button className="hidden sm:block bg-[#1e2028] hover:bg-gray-800 text-gray-200 text-xs font-semibold px-6 py-2.5 rounded-full border border-gray-700/50 transition">
+          <div className="flex items-center gap-2 sm:gap-3 absolute right-0">
+            <button onClick={() => window.location.hash = '#/admin/login'} className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-xs font-semibold px-4 py-2 rounded-full transition outline-none focus:outline-none shadow-[0_0_12px_rgba(77,228,190,0.4)]">Admin</button>
+            <button className="hidden sm:block bg-white/5 hover:bg-white/10 text-gray-200 text-xs font-semibold px-5 py-2 rounded-full border border-white/10 backdrop-blur-sm transition outline-none focus:outline-none">
               Join Now
             </button>
             <button
-              className="md:hidden text-gray-300 hover:text-white p-2 z-50"
+              className="md:hidden text-white hover:text-cyan-400 p-2 z-50 outline-none focus:outline-none transition"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,13 +84,13 @@ const HeroSection = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-[60px] left-0 w-full bg-[#12141a]/95 backdrop-blur-md z-40 border-b border-gray-800/50 py-6 px-6 flex flex-col gap-5 shadow-2xl">
-            <a href="#home" onClick={() => setIsMenuOpen(false)} className="text-white font-medium text-lg">Home</a>
-            <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">About</a>
-            <a href="#lecturer" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">Lecturer</a>
-            <a href="#workshop" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">Workshop</a>
-            <a href="#news" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white font-medium text-lg">News</a>
-            <button className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-sm font-bold px-6 py-3 rounded-full transition w-full mt-2">
+          <div className="md:hidden absolute top-[60px] left-0 w-full bg-[#0b0c0e] z-40 border-b border-cyan-500/20 py-8 px-8 flex flex-col gap-1 shadow-2xl">
+            <a href="#home" onClick={() => setIsMenuOpen(false)} className="text-white font-semibold text-base py-3 border-b border-white/5 hover:text-cyan-400 transition">Home</a>
+            <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-white font-semibold text-base py-3 border-b border-white/5 hover:text-cyan-400 transition">About</a>
+            <a href="#lecturer" onClick={() => setIsMenuOpen(false)} className="text-white font-semibold text-base py-3 border-b border-white/5 hover:text-cyan-400 transition">Lecturer</a>
+            <a href="#workshop" onClick={() => setIsMenuOpen(false)} className="text-white font-semibold text-base py-3 border-b border-white/5 hover:text-cyan-400 transition">Workshop</a>
+            <a href="#news" onClick={() => setIsMenuOpen(false)} className="text-white font-semibold text-base py-3 border-b border-white/5 hover:text-cyan-400 transition">News</a>
+            <button className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 text-sm font-bold px-6 py-3 rounded-full transition w-full mt-5 outline-none focus:outline-none">
               Join Now
             </button>
           </div>
@@ -109,12 +101,15 @@ const HeroSection = () => {
 
           {/* Left Column */}
           <div className="lg:col-span-6 flex flex-col justify-between">
-            <h1 className="text-5xl sm:text-7xl lg:text-[5.25rem] font-serif tracking-tight leading-[1.05] text-white mb-4 sm:mb-6">
-              Teknologi<br />
-              Rekayasa<br />
-              Perangkat<br />
-              Lunak
-            </h1>
+
+            {/* Logo besar dengan animasi */}
+            <div className="mb-4 sm:mb-6">
+              <img
+                src={logoTrpl}
+                alt="Logo TRPL"
+                className="w-56 sm:w-72 lg:w-80 h-auto object-contain animate-logo-hero drop-shadow-[0_0_40px_rgba(77,228,190,0.35)]"
+              />
+            </div>
 
             {/* Cards Container - mobile: stacked, desktop: overlapping */}
             <div className="w-full mt-4 sm:mt-8 flex flex-col gap-4 sm:block sm:relative sm:h-[360px]">

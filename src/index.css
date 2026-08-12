@@ -11,6 +11,41 @@
   --color-brandGreen: #7bb026;
 }
 
+/* ===== LOGO HERO ANIMATION ===== */
+@keyframes logoEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: drop-shadow(0 0 0px rgba(77, 228, 190, 0));
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.03);
+    filter: drop-shadow(0 0 30px rgba(77, 228, 190, 0.5));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    filter: drop-shadow(0 0 20px rgba(77, 228, 190, 0.3));
+  }
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0px);
+    filter: drop-shadow(0 0 20px rgba(77, 228, 190, 0.3));
+  }
+  50% {
+    transform: translateY(-10px);
+    filter: drop-shadow(0 0 40px rgba(77, 228, 190, 0.55));
+  }
+}
+
+.animate-logo-hero {
+  animation: logoEntrance 1s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+             logoFloat 4s ease-in-out 1s infinite;
+}
+
 /* ===== SMOOTH SCROLL ===== */
 html {
   scroll-behavior: smooth;

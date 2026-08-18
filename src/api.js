@@ -162,7 +162,12 @@ function getLocalData(resource) {
 }
 
 function setLocalData(resource, items) {
-  localStorage.setItem('trpl_store_' + resource, JSON.stringify(items));
+  try {
+    localStorage.setItem('trpl_store_' + resource, JSON.stringify(items));
+  } catch (e) {
+    console.error('Local storage error:', e);
+    alert('Penyimpanan browser penuh! Tidak bisa menyimpan gambar/data baru. Harap gunakan URL gambar (bukan upload) atau hapus data lama.');
+  }
 }
 
 async function login(username, password) {

@@ -8,6 +8,21 @@ const ResourceManager = ({ resource, schema, fieldLabels={}, refreshTrigger }) =
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [editFile, setEditFile] = useState(null);
+  const [previewData, setPreviewData] = useState(null);
+
+  const handlePreview = (type) => {
+    let tempImageUrl = null;
+    if (type === 'add' && file) tempImageUrl = URL.createObjectURL(file);
+    if (type === 'edit' && editFile) tempImageUrl = URL.createObjectURL(editFile);
+
+    const baseData = type === 'add' ? form : editForm;
+    setPreviewData({
+      type,
+      data: { ...baseData, imageUrl: tempImageUrl || baseData.imageUrl || baseData.image || '' }
+    });
+  };
+
+  const closePreview = () => setPreviewData(null);
 
   useEffect(() => { fetchItems(); }, [refreshTrigger, resource]);
 
@@ -138,9 +153,14 @@ const ResourceManager = ({ resource, schema, fieldLabels={}, refreshTrigger }) =
             <span className="text-[11px] text-slate-500">Max 2MB</span>
           </div>
 
-          <button type="submit" className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-xs px-4 py-2 rounded-lg transition shadow">
-            + Tambah {resource}
-          </button>
+          <div className="flex gap-2">
+            <button type="button" onClick={() => handlePreview('add')} className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2 rounded-lg transition shadow">
+              👁️ Lihat Preview
+            </button>
+            <button type="submit" className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-xs px-4 py-2 rounded-lg transition shadow">
+              + Tambah {resource}
+            </button>
+          </div>
         </div>
       </form>
 
@@ -193,8 +213,11 @@ const ResourceManager = ({ resource, schema, fieldLabels={}, refreshTrigger }) =
                     <button type="button" onClick={cancelEdit} className="px-3 py-1 text-xs bg-slate-200 text-slate-700 rounded">
                       Batal
                     </button>
-                    <button type="submit" className="px-4 py-1 text-xs bg-emerald-600 text-white rounded font-medium shadow">
-                      Simpan Perubahan
+                    <button type="button" onClick={() => handlePreview('edit')} className="px-3 py-1 text-xs bg-purple-600 hover:bg-purple-700 text-white rounded font-medium shadow">
+                      👁️ Preview
+                    </button>
+                    <button type="submit" className="px-4 py-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white rounded font-medium shadow">
+                      Simpan
                     </button>
                   </div>
                 </div>
@@ -234,6 +257,63 @@ const ResourceManager = ({ resource, schema, fieldLabels={}, refreshTrigger }) =
           </div>
         ))}
       </div>
+
+      {/* Preview Modal */}
+      {previewData && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#12141a] rounded-2xl p-6 border border-gray-700 w-full max-w-sm relative">
+            <button onClick={closePreview} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-full transition z-10">✕</button>
+            <h3 className="text-white font-bold mb-4 border-b border-gray-700 pb-2">Preview Tampilan</h3>
+            
+            {resource === 'lecturers' || resource === 'staff' ? (
+              <div className="bg-[#1f232b] text-white rounded-[1.75rem] p-5 shadow-xl flex flex-col justify-between border border-slate-800">
+                <div className="w-full h-64 rounded-[1.25rem] overflow-hidden mb-5 relative">
+                  <img src={previewData.data.imageUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop'} alt="preview" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="font-bold text-xl text-white">{previewData.data.name || 'Nama'}</h3>
+                    <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                  </div>
+                  <p className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-3">
+                    {previewData.data.title || previewData.data.role || 'Jabatan'}
+                  </p>
+                  <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-4">
+                    {previewData.data.bio || previewData.data.description || 'Deskripsi bio.'}
+                  </p>
+                </div>
+              </div>
+            ) : resource === 'workshops' ? (
+              <article className="rounded-[2rem] overflow-hidden border border-gray-800 bg-[#161922] flex flex-col">
+                <div className="relative h-56 w-full overflow-hidden bg-slate-900">
+                  <img src={previewData.data.imageUrl || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop'} alt="preview" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#161922] via-transparent to-black/40"></div>
+                  <span className="absolute top-4 left-4 bg-cyan-400 text-slate-950 font-extrabold text-[11px] px-3.5 py-1 rounded-full uppercase">{previewData.data.label || 'Workshop'}</span>
+                  {previewData.data.date && <span className="absolute bottom-3 right-4 bg-slate-950/80 text-cyan-300 text-[10px] font-mono font-medium px-2.5 py-1 rounded-md">📅 {previewData.data.date}</span>}
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">{previewData.data.title || 'Judul Workshop'}</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-3 mb-4">{previewData.data.description || previewData.data.content || 'Deskripsi workshop.'}</p>
+                </div>
+              </article>
+            ) : resource === 'news' ? (
+              <article className="rounded-[2rem] overflow-hidden border border-gray-800/90 bg-[#141722] flex flex-col">
+                <div className="relative overflow-hidden min-h-[200px] bg-slate-900">
+                  <img src={previewData.data.imageUrl || 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=900&auto=format&fit=crop'} alt="preview" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#141722] via-[#141722]/30 to-transparent"></div>
+                  <span className="absolute top-4 left-4 bg-amber-400 text-slate-950 font-black text-[11px] px-3.5 py-1 rounded-full uppercase">{previewData.data.label || 'Berita'}</span>
+                </div>
+                <div className="p-6">
+                  {previewData.data.date && <div className="text-[11px] font-mono text-amber-400 uppercase mb-2">📅 {previewData.data.date}</div>}
+                  <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">{previewData.data.title || 'Judul Berita'}</h3>
+                  <p className="text-xs sm:text-sm leading-relaxed text-gray-300 line-clamp-4">{previewData.data.content || previewData.data.description || 'Isi berita.'}</p>
+                </div>
+              </article>
+            ) : null}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

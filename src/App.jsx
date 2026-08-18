@@ -150,10 +150,10 @@ const HeroSection = () => {
                       <path d="M13 2 3 13h6v9l10-11h-6z" />
                     </svg>
                   </div>
-                  <h3 className="font-bold text-sm leading-tight">Lorem Ipsum Sit Dolor Amet</h3>
+                  <h3 className="font-bold text-sm leading-tight">Kurikulum Berbasis Industri</h3>
                 </div>
                 <p className="text-[11px] font-medium leading-snug opacity-95">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966.
+                  Materi pembelajaran yang selalu disesuaikan dengan kebutuhan teknologi terkini untuk mencetak lulusan yang siap kerja.
                 </p>
               </div>
 
@@ -165,10 +165,10 @@ const HeroSection = () => {
                       <path d="M4 7.5 12 3l8 4.5v9L12 21 4 16.5v-9zm1.2 1.1L12 5.3l6.8 3.3v1.8L12 8.7 5.2 10.3v-1.7zm0 4.4 6.8 3.3 6.8-3.3v4.2L12 19.7 5.2 13.4v-1.4z" />
                     </svg>
                   </div>
-                  <h3 className="font-bold text-sm leading-tight">Lorem Ipsum Sit Dolor Amet</h3>
+                  <h3 className="font-bold text-sm leading-tight">Fasilitas Laboratorium Modern</h3>
                 </div>
                 <p className="text-[11px] font-medium leading-snug opacity-95">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966.
+                  Didukung dengan laboratorium komputer canggih dan infrastruktur penunjang kegiatan praktikum mahasiswa.
                 </p>
               </div>
 
@@ -180,7 +180,7 @@ const HeroSection = () => {
 
             <div className="mb-8">
               <p className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-md mb-5 font-normal">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966.
+                Program Studi Teknologi Rekayasa Perangkat Lunak berdedikasi mencetak Software Engineer berkualitas yang unggul dalam pengembangan sistem, analisis data, dan inovasi teknologi digital.
               </p>
 
               <button className="bg-gradient-to-r from-lime-400 to-yellow-400 text-slate-950 font-bold text-xs px-6 py-2.5 rounded-full shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:opacity-95 transition transform hover:scale-105">
@@ -266,7 +266,7 @@ const AboutSection = () => {
             </h2>
 
             <p className="text-[13px] text-black/80 leading-[1.8] mb-10 max-w-lg font-medium">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.
+              Program Studi Teknologi Rekayasa Perangkat Lunak (TRPL) merupakan program pendidikan vokasi unggulan yang fokus pada pengembangan perangkat lunak (software development), pengujian (testing), dan manajemen proyek TI. Kami membekali mahasiswa dengan keahlian teknis dan soft skill agar mampu bersaing di industri kreatif dan teknologi global.
             </p>
 
             {/* Statistik Bawah */}
@@ -330,7 +330,7 @@ const LecturerSection = () => {
 
             {/* Teks Deskripsi: Ukuran diperbesar (text-base sm:text-lg) & lebih terang (text-gray-200) */}
             <p className="text-base sm:text-lg text-gray-200 leading-relaxed mb-10 font-normal">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.
+              Dididik langsung oleh para dosen ahli dan praktisi industri yang berpengalaman. Kami memastikan setiap mahasiswa mendapatkan bimbingan intensif dalam mengembangkan solusi perangkat lunak yang inovatif, aman, dan efisien untuk menjawab tantangan dunia nyata.
             </p>
 
             {/* Statistik (Total LAB & Total Lecturer) */}
@@ -381,7 +381,7 @@ const LecturerSliderSection = () => {
 
   const loadData = () => {
     import('./api').then(m => m.default.list('lecturers')).then(data => {
-      if (Array.isArray(data) && data.length) setItems(data);
+      if (Array.isArray(data)) setItems(data);
     }).catch(() => { });
   };
 
@@ -441,7 +441,7 @@ const LecturerSliderSection = () => {
           {visibleItems.map((lecturer, index) => (
             <div
               key={lecturer.id || index}
-              className={`bg-[#1f232b] text-white rounded-[1.75rem] p-5 shadow-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 border border-slate-800 reveal reveal-delay-${Math.min(index + 1, 5)}`}
+              className={`bg-[#1f232b] text-white rounded-[1.75rem] p-5 shadow-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 border border-slate-800`}
             >
               <div className="w-full h-64 rounded-[1.25rem] overflow-hidden mb-5 relative group">
                 <img
@@ -479,7 +479,7 @@ const StaffSliderSection = () => {
 
   const loadData = () => {
     import('./api').then(m => m.default.list('staff')).then(data => {
-      if (Array.isArray(data) && data.length) setItems(data);
+      if (Array.isArray(data)) setItems(data);
     }).catch(() => { });
   };
 
@@ -823,47 +823,44 @@ const FooterSection = () => {
 
           {/* Brand & Logo */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex font-black text-3xl tracking-tighter leading-none italic">
-                <span className="text-cyan-400">T</span>
-                <span className="text-white">/</span>
-                <span className="text-cyan-400">L</span>
-              </div>
-              <div className="text-[9px] leading-tight font-bold tracking-wider text-gray-300 uppercase">
-                Teknologi<br />Rekayasa Perangkat<br />Lunak
-              </div>
+            <div className="mb-6">
+              <img
+                src={logoTrpl}
+                alt="Logo TRPL"
+                className="w-40 sm:w-48 h-auto object-contain"
+              />
             </div>
           </div>
 
-          {/* Column 1: Learn More */}
+          {/* Column 1: Akademik */}
           <div>
-            <h4 className="font-bold text-sm text-white mb-4">Learn More</h4>
+            <h4 className="font-bold text-sm text-white mb-4">Akademik</h4>
             <ul className="space-y-4 sm:space-y-2.5 text-xs text-gray-400 font-medium">
-              <li><a href="#" className="hover:text-white transition">About Lift</a></li>
-              <li><a href="#" className="hover:text-white transition">Press Release</a></li>
-              <li><a href="#" className="hover:text-white transition">Environment</a></li>
-              <li><a href="#" className="hover:text-white transition">Jobs</a></li>
-              <li><a href="#" className="hover:text-white transition">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition">Contact Us</a></li>
+              <li><a href="#about" className="hover:text-white transition">Tentang Prodi</a></li>
+              <li><a href="#" className="hover:text-white transition">Kurikulum</a></li>
+              <li><a href="#lecturer" className="hover:text-white transition">Dosen Pengajar</a></li>
+              <li><a href="#workshop" className="hover:text-white transition">Workshop & Event</a></li>
+              <li><a href="#" className="hover:text-white transition">Pendaftaran Mahasiswa</a></li>
             </ul>
           </div>
 
-          {/* Column 2: Tickets & Booking */}
+          {/* Column 2: Fasilitas */}
           <div>
-            <h4 className="font-bold text-sm text-white mb-4">Tickets & Booking</h4>
+            <h4 className="font-bold text-sm text-white mb-4">Fasilitas</h4>
             <ul className="space-y-4 sm:space-y-2.5 text-xs text-gray-400 font-medium">
-              <li><a href="#" className="hover:text-white transition">Lift Tickets</a></li>
-              <li><a href="#" className="hover:text-white transition">Season Passes</a></li>
-              <li><a href="#" className="hover:text-white transition">Vacation Packages</a></li>
+              <li><a href="#" className="hover:text-white transition">Laboratorium Komputer</a></li>
+              <li><a href="#" className="hover:text-white transition">Perpustakaan Digital</a></li>
+              <li><a href="#" className="hover:text-white transition">Ruang Diskusi Kreatif</a></li>
             </ul>
           </div>
 
-          {/* Column 3: Contact Us */}
+          {/* Column 3: Hubungi Kami */}
           <div>
-            <h4 className="font-bold text-sm text-white mb-4">Contact Us</h4>
+            <h4 className="font-bold text-sm text-white mb-4">Hubungi Kami</h4>
             <ul className="space-y-4 sm:space-y-2.5 text-xs text-gray-400 font-medium">
-              <li>Hotel Reservation: <span className="text-white">123-456-7890</span></li>
-              <li>Ticket Office: <span className="text-white">123-456-789</span></li>
+              <li>Telepon: <span className="text-white">(021) 123-4567</span></li>
+              <li>Email: <span className="text-white">info.trpl@kampus.ac.id</span></li>
+              <li>Alamat: <span className="text-white">Gedung Fakultas Teknik, Lt 2</span></li>
             </ul>
           </div>
 
@@ -909,7 +906,7 @@ const FooterSection = () => {
         {/* Divider Line */}
         <div className="border-t border-gray-800/80 pt-8 text-center">
           <p className="text-xs text-gray-500 font-medium">
-            © 2019 Lift Media | All Rights Reserved
+            © {new Date().getFullYear()} Program Studi Teknologi Rekayasa Perangkat Lunak | Hak Cipta Dilindungi
           </p>
         </div>
 

@@ -11,8 +11,8 @@ export default function LoginPage(){
     setLoading(true); setError('');
     try{
       const data = await api.login(creds.username, creds.password);
-      // navigate to admin panel
-      window.location.hash = '#/admin/panel';
+      // navigate to admin entrypoint
+      window.location.hash = '#/admin';
     }catch(err){
       setError('Login gagal — cek username/password');
       setLoading(false);

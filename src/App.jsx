@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import logoPng from './assets/logofix.png';
 import AdminPanel from './admin/AdminPanel';
 import LoginPage from './admin/LoginPage';
 
@@ -10,34 +11,31 @@ const HeroSection = () => {
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-amber-700/10 rounded-full blur-[140px] -z-10 pointer-events-none"></div>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div id="home" className="max-w-7xl mx-auto px-6 py-6">
 
         {/* Navbar */}
         <header className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex font-black text-3xl tracking-tighter leading-none italic">
-              <span className="text-cyan-400">T</span>
-              <span className="text-white">/</span>
-              <span className="text-cyan-400">L</span>
-            </div>
-            <div className="text-[9px] leading-tight font-bold tracking-wider text-gray-300 uppercase">
-              Teknologi<br />Rekayasa Perangkat<br />Lunak
-            </div>
+          <div className="flex items-center gap-4">
+            <img src={logoPng} alt="TRPL Logo" className="h-12 w-auto object-contain" />
           </div>
 
           <nav className="hidden md:flex items-center space-x-10 text-sm font-medium text-gray-300">
-            <a href="#" className="text-white hover:text-cyan-400 transition">Home</a>
-            <a href="#" className="hover:text-white transition">About</a>
-            <a href="#" className="hover:text-white transition">Lecturer</a>
-            <a href="#" className="hover:text-white transition">Workshop</a>
-            <a href="#" className="hover:text-white transition">News</a>
+            <a href="#home" className="text-white hover:text-cyan-400 transition">Home</a>
+            <a href="#about" className="hover:text-white transition">About</a>
+            <a href="#lecturer" className="hover:text-white transition">Lecturer</a>
+            <a href="#workshop" className="hover:text-white transition">Workshop</a>
+            <a href="#news" className="hover:text-white transition">News</a>
           </nav>
 
           <div className="flex items-center gap-3">
-            <button onClick={() => window.location.hash = '#/admin/login'} className="bg-yellow-400 hover:opacity-95 text-slate-900 text-xs font-semibold px-3 py-2 rounded-full transition">Admin</button>
-            <button className="bg-[#1e2028] hover:bg-gray-800 text-gray-200 text-xs font-semibold px-6 py-2.5 rounded-full border border-gray-700/50 transition">
+            <a
+              href="https://sv.ipb.ac.id/"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-[#1e2028] hover:bg-gray-800 text-gray-200 text-xs font-semibold px-6 py-2.5 rounded-full border border-gray-700/50 transition inline-block"
+            >
               Join Now
-            </button>
+            </a>
           </div>
         </header>
 
@@ -97,9 +95,12 @@ const HeroSection = () => {
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966.
               </p>
 
-              <button className="bg-gradient-to-r from-lime-400 to-yellow-400 text-slate-950 font-bold text-xs px-6 py-2.5 rounded-full shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:opacity-95 transition transform hover:scale-105">
+              <a
+                href="#about"
+                className="bg-gradient-to-r from-lime-400 to-yellow-400 text-slate-950 font-bold text-xs px-6 py-2.5 rounded-full shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:opacity-95 transition transform hover:scale-105 inline-block"
+              >
                 Let's Explore
-              </button>
+              </a>
             </div>
 
             {/* Terminal Mockup */}
@@ -158,7 +159,7 @@ const HeroSection = () => {
 
 const AboutSection = () => {
   return (
-    <section className="relative z-30 -mt-32 w-full min-h-screen bg-white py-24 overflow-hidden">
+    <section id="about" className="relative z-30 -mt-32 w-full min-h-screen bg-white py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
@@ -226,7 +227,7 @@ const AboutSection = () => {
 
 const LecturerSection = () => {
   return (
-    <section className="relative w-full min-h-screen bg-darkBg text-white py-24 overflow-hidden flex items-center">
+    <section id="lecturer" className="relative w-full min-h-screen bg-darkBg text-white py-24 overflow-hidden flex items-center">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
@@ -504,7 +505,7 @@ const WorkshopSection = () => {
   const displayItems = items.length >= 6 ? items.slice(0, 6) : items;
 
   return (
-    <section className="relative w-full bg-[#0e1117] text-white py-24 overflow-hidden">
+    <section id="workshop" className="relative w-full bg-[#0e1117] text-white py-24 overflow-hidden">
       {/* Background Accent Decorative Circle */}
       <div className="absolute -top-24 -left-24 rotate-[15deg] pointer-events-none z-0">
         <div className="relative w-80 h-96 bg-brandOrange/80 blur-2xl rounded-full opacity-30"></div>
@@ -619,7 +620,7 @@ const NewsCardSection = () => {
   const visibleNews = items.length <= 2 ? items : items.slice(newsIndex, newsIndex + 2);
 
   return (
-    <section className="bg-[#0b0e14] text-white py-24 relative overflow-hidden font-sans border-t border-gray-800">
+    <section id="news" className="bg-[#0b0e14] text-white py-24 relative overflow-hidden font-sans border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative">
 
         {/* Section Header with Left/Right Chevrons */}
@@ -738,14 +739,7 @@ const FooterSection = () => {
           {/* Brand & Logo */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex font-black text-3xl tracking-tighter leading-none italic">
-                <span className="text-cyan-400">T</span>
-                <span className="text-white">/</span>
-                <span className="text-cyan-400">L</span>
-              </div>
-              <div className="text-[9px] leading-tight font-bold tracking-wider text-gray-300 uppercase">
-                Teknologi<br />Rekayasa Perangkat<br />Lunak
-              </div>
+              <img src={logoPng} alt="TRPL Logo" className="h-12 w-auto object-contain" />
             </div>
           </div>
 
@@ -834,16 +828,42 @@ const FooterSection = () => {
 
 export default function App() {
   const [route, setRoute] = useState(window.location.hash || '#/');
+
   useEffect(() => {
     function onHash() { setRoute(window.location.hash || '#/'); }
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  useEffect(() => {
+    const nodes = document.querySelectorAll('header, main, section, footer');
+
+    nodes.forEach((node, index) => {
+      node.classList.add('reveal');
+      node.style.setProperty('--delay', `${index * 80}ms`);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -8% 0px'
+    });
+
+    nodes.forEach((node) => observer.observe(node));
+
+    return () => observer.disconnect();
+  }, []);
+
   if (route.startsWith('#/admin')) {
-    if (route === '#/admin/login') return <LoginPage />;
-    if (route === '#/admin/panel') return <AdminPanel fullPage={true} />;
-    return <LoginPage />;
+    if (route === '#/admin' || route === '#/admin/login' || route === '#/admin/panel') {
+      return <AdminPanel fullPage={true} />;
+    }
+    return <AdminPanel fullPage={true} />;
   }
 
   return (
